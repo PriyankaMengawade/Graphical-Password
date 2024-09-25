@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .container h2 {
+            text-align: center;
+        }
+
+        .images {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .image {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .image.selected {
+            border: 2px solid #007bff;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Login</h2>
+        <div class="images">
+            <img class="image" src="image1.jpg" alt="Image 1">
+            <img class="image" src="image2.jpg" alt="Image 2">
+            <img class="image" src="image3.jpg" alt="Image 3">
+            <img class="image" src="image4.jpg" alt="Image 4">
+            <img class="image" src="image5.jpg" alt="Image 5">
+            <img class="image" src="image6.jpg" alt="Image 6">
+            <!-- Add more images as needed -->
+        </div>
+        <button id="loginBtn" class="btn" disabled>Login</button>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.images .image');
+        const loginBtn = document.getElementById('loginBtn');
+        let selectedImages = [];
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                image.classList.toggle('selected');
+                const src = image.getAttribute('src');
+                if (image.classList.contains('selected')) {
+                    selectedImages.push(src);
+                } else {
+                    selectedImages = selectedImages.filter(img => img !== src);
+                }
+                loginBtn.disabled = selectedImages.length === 0;
+            });
+        });
+
+        loginBtn.addEventListener('click', () => {
+            // Retrieve stored registration data from localStorage
+            const storedPasswordImages = JSON.parse(localStorage.getItem('passwordImages'));
+
+            // Check if the selected images match the stored password images
+            if (arraysEqual(selectedImages, storedPasswordImages)) {
+                alert('Login successful! go to next page...');
+                // Redirect to home page or another page after successful login
+                window.location.href = 'display.html';
+            } else {
+                alert('Invalid image-based password. Please try again.');
+            }
+        });
+
+        // Function to compare two arrays
+        function arraysEqual(arr1, arr2) {
+            if (arr1.length !== arr2.length) return false;
+            for (let i = 0; i < arr1.length; i++) {
+                if (arr1[i] !== arr2[i]) return false;
+            }
+            return true;
+        }
+    </script>
+
+</body>
+
+</html>

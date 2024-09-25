@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Page</title>
+</head>
+
+<body>
+    <h1>Upload a File</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+
+    <script>
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+
+            const file = fileInput.files[0];
+
+            // Store file content in session storage
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                sessionStorage.setItem('fileContent', event.target.result);
+                // Redirect to file display page
+                window.location.href = 'home.html';
+
+            };
+
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+
+</html>

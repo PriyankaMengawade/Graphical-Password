@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .container h2 {
+            text-align: center;
+        }
+
+        .images {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .image {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .image.selected {
+            border: 2px solid #007bff;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Registration</h2>
+        <div class="images">
+            <img class="image" src="image1.jpg" alt="Image 1">
+            <img class="image" src="image2.jpg" alt="Image 2">
+            <img class="image" src="image3.jpg" alt="Image 3">
+            <img class="image" src="image4.jpg" alt="Image 4">
+            <img class="image" src="image5.jpg" alt="Image 5">
+            <img class="image" src="image6.jpg" alt="Image 6">
+            <!-- Add more images as needed -->
+        </div>
+        <button id="registerBtn" class="btn" disabled>Register</button>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.images .image');
+        const registerBtn = document.getElementById('registerBtn');
+        let selectedImages = [];
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                image.classList.toggle('selected');
+                const src = image.getAttribute('src');
+                if (image.classList.contains('selected')) {
+                    selectedImages.push(src);
+                } else {
+                    selectedImages = selectedImages.filter(img => img !== src);
+                }
+                registerBtn.disabled = selectedImages.length === 0;
+            });
+        });
+
+        registerBtn.addEventListener('click', () => {
+            // Store selectedImages in localStorage
+            localStorage.setItem('passwordImages', JSON.stringify(selectedImages));
+
+            // Redirect to login page
+            window.location.href = 'f.html';
+        });
+    </script>
+
+</body>
+
+</html>
